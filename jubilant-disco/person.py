@@ -3,15 +3,10 @@ from .occupation import Occupation
 
 class Person(Actor):
     name: str
-    birthYear: int
-    happiness: int
-    hunger: int
-    occupations: list[Occupation]
+    birthYear: int = 1838
+    happiness: int = 0
+    hunger: int = 0
+    occupations: list[Occupation] = []
 
-    def __init__(self):
+    def __init__(self) -> None:
         Actor.__init__(self)
-        self.name = "Empty"
-        self.birthYear = -1
-        self.happiness = -1
-        self.hunger = -1
-        self.occupations = []

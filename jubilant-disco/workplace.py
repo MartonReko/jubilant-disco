@@ -1,12 +1,9 @@
-from .product import Product
+from .actor import Actor
+from .recipe import Recipe
 
-class Workplace:
-    maxWorkers:int
+class Workplace(Actor):
+    maxWorkers: int = 0
+    recipe: Recipe
 
-    def __init__(self):
-        self.maxWorkers = 0
-
-# TODO
-# Return product
-    def Produce(self) -> None:
-        pass
+    def __init__(self) -> None:
+        Actor.__init__(self) 
