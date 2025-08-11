@@ -1,9 +1,12 @@
-from .product import Product
+from sqlmodel import SQLModel
+from .product import ProductBase
+from base_table import BaseTable
 
-class Actor:
+
+class ActorBase(SQLModel):
     money: int = 0
-    products : list[Product] = []
+    products: list[ProductBase] = []
 
-    def Buy(self, product) -> None:
-        # TODO
-        pass
+
+class Actor(ActorBase, BaseTable, table=True):
+    pass

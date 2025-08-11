@@ -1,5 +1,10 @@
-from .good import Good
+from sqlmodel import SQLModel
+from .good import GoodBase
+from .base_table import BaseTable
 
-class Recipe:
-    input: list[Good]
-    output: Good
+class RecipeBase(SQLModel):
+    input: list[GoodBase]
+    output: GoodBase
+    
+class Recipe(RecipeBase, BaseTable, table=True):
+    pass

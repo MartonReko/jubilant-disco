@@ -1,9 +1,10 @@
-from .actor import Actor
-from .recipe import Recipe
+from .actor import ActorBase
+from .recipe import RecipeBase
+from .base_table import BaseTable
 
-class Workplace(Actor):
+class WorkplaceBase(ActorBase):
     maxWorkers: int = 0
-    recipe: Recipe
+    recipe: RecipeBase
 
-    def __init__(self) -> None:
-        Actor.__init__(self) 
+class WorkPlace(WorkplaceBase, BaseTable, table=True):
+    pass

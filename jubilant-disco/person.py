@@ -1,12 +1,13 @@
-from .actor import Actor
+from .actor import ActorBase
 from .occupation import Occupation
+from .base_table import BaseTable
 
-class Person(Actor):
+class PersonBase(ActorBase):
     name: str
-    birthYear: int = 1838
+    birthYear: int
     happiness: int = 0
     hunger: int = 0
     occupations: list[Occupation] = []
-
-    def __init__(self) -> None:
-        Actor.__init__(self)
+    
+class Person(PersonBase, BaseTable, table=True):
+    pass

@@ -1,6 +1,11 @@
-from .workplace import Workplace
+from sqlmodel import SQLModel
+from .workplace import WorkplaceBase
+from .base_table import BaseTable
 
-class Occupation:
+class OccupationBase(SQLModel):
     wage: int
     hours: int
-    workplace: Workplace
+    workplace: WorkplaceBase
+    
+class Occupation(OccupationBase, BaseTable, table=True):
+    pass
