@@ -14,3 +14,6 @@ class PersonBase(ActorBase):
 
 class Person(PersonBase, BaseTable, table=True):
     pass
+
+class PersonCreate(PersonBase):
+    pass
