@@ -1,7 +1,7 @@
+from .base_table import BaseTable
+from .person import Person, PersonCreate
 from fastapi import FastAPI
 from sqlmodel import Field, Session, SQLModel, create_engine, select
-from .person import Person, PersonCreate
-from .base_table import BaseTable
 
 
 #class HeroBase(SQLModel):
@@ -41,7 +41,7 @@ def on_startup():
     create_db_and_tables()
 
 
-@app.post("/person/", response_model=BaseTable)
+@app.post("/people/", response_model=BaseTable)
 def create_person(person: PersonCreate):
     with Session(engine) as session:
         db_people = Person.model_validate(person)
