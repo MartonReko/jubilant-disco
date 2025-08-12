@@ -1,5 +1,5 @@
 [project]
-name = "jubilant-disco"
+name = "jubilant_disco"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -11,3 +11,11 @@ dependencies = [
 
 [tool.uv]
 package = true
+
+[tool.uv.sources]
+jubilant-disco = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "jubilant_disco",
+]

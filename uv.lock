@@ -244,11 +244,19 @@ dependencies = [
     { name = "sqlmodel" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "jubilant-disco" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.116.1" },
     { name = "sqlmodel", specifier = ">=0.0.24" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "jubilant-disco", editable = "." }]
 
 [[package]]
 name = "markdown-it-py"
