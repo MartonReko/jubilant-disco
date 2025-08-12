@@ -1,7 +1,7 @@
 from sqlmodel import Relationship
-from .actor import ActorBase
-from .occupation import Occupation
-from .base_table import BaseTable
+from jubilant_disco.actor import ActorBase
+from jubilant_disco.occupation import Occupation
+from jubilant_disco.base_table import BaseTable
 
 
 class PersonBase(ActorBase):

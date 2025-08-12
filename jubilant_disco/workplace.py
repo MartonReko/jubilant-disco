@@ -1,7 +1,7 @@
 from sqlmodel import Field, Relationship
-from .actor import ActorBase
-from .recipe import RecipeBase
-from .base_table import BaseTable
+from jubilant_disco.actor import ActorBase
+from jubilant_disco.recipe import RecipeBase
+from jubilant_disco.base_table import BaseTable
 
 class WorkplaceBase(ActorBase):
     maxWorkers: int = 0

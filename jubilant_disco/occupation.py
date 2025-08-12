@@ -1,6 +1,6 @@
 from sqlmodel import Field, Relationship, SQLModel
-from .workplace import WorkplaceBase
-from .base_table import BaseTable
+from jubilant_disco.workplace import WorkplaceBase
+from jubilant_disco.base_table import BaseTable
 
 
 class OccupationBase(SQLModel):

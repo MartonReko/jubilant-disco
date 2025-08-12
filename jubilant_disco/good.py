@@ -1,6 +1,5 @@
-from .base_table import BaseTable
 from sqlmodel import SQLModel
-
+from jubilant_disco.base_table import BaseTable
 
 class GoodBase(SQLModel):
     name: str

@@ -1,6 +1,6 @@
 from sqlmodel import Relationship, SQLModel
-from .product import ProductBase
-from .base_table import BaseTable
+from jubilant_disco.product import ProductBase
+from jubilant_disco.base_table import BaseTable
 
 class ActorBase(SQLModel):
     money: int = 0

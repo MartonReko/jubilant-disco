@@ -1,7 +1,7 @@
 from sqlmodel import Field, Relationship, SQLModel
-from .good import Good
-from .actor import Actor
-from .base_table import BaseTable
+from jubilant_disco.good import Good
+from jubilant_disco.actor import Actor
+from jubilant_disco.base_table import BaseTable
 
 
 class ProductBase(SQLModel):

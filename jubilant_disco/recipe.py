@@ -1,6 +1,6 @@
 from sqlmodel import Relationship, SQLModel
-from .good import GoodBase
-from .base_table import BaseTable
+from jubilant_disco.good import GoodBase
+from jubilant_disco.base_table import BaseTable
 
 
 class RecipeBase(SQLModel):
