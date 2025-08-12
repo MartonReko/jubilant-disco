@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from sqlmodel import Session, SQLModel, create_engine, select
-from jubilant_disco.schema import Person, PersonCreate, BaseTable
-
+from jubilant_disco.tables import *
 
 def main() -> None:
 
@@ -20,6 +19,7 @@ def main() -> None:
     def on_startup():
         create_db_and_tables()
 
+""" 
     @app.post("/person/", response_model=BaseTable)
     def create_person(person: PersonCreate):
         with Session(engine) as session:
@@ -34,7 +34,7 @@ def main() -> None:
         with Session(engine) as session:
             people = session.exec(select(Person)).all()
             return people
-
+ """
 
 if __name__ == "__main__":
     main()
