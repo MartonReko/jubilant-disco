@@ -1,7 +1,6 @@
 from fastapi import FastAPI
-from sqlmodel import Field, Session, SQLModel, create_engine, select
-from jubilant_disco.person import Person, PersonCreate
-from jubilant_disco.base_table import BaseTable
+from sqlmodel import Session, SQLModel, create_engine, select
+from jubilant_disco.schema import Person, PersonCreate, BaseTable
 
 
 def main() -> None:
