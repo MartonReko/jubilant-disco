@@ -3,36 +3,62 @@ from sqlmodel import Field, Relationship, SQLModel
 
 
 class ActorBase(SQLModel):
+    id: int | None = Field(default=None, primary_key=True)
     money: int = 0
 
 
-class Actor(ActorBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    products: list["Product"] = Relationship(back_populates="actor")
+class Actor(ActorBase):
+    products: list["Product"] | None = Relationship(back_populates="actor")
 
 
 class GoodBase(SQLModel):
+    id: int | None = Field(default=None, primary_key=True)
     name: str
 
 
 class Good(GoodBase, table=True):
+    products: list["Product"] | None = Relationship(back_populates="good")
+    recipe_items: list["RecipeItem"] | None = Relationship(back_populates="good")
+
+
+class RecipeItemBase(SQLModel):
     id: int | None = Field(default=None, primary_key=True)
+    good_id: int = Field(default=None, foreign_key="good.id")
+    recipe_id: int = Field(default=None, foreign_key="recipe.id")
+    quantity: int = 1
+    is_output: bool
+
+
+class RecipeItem(RecipeItemBase, table=True):
+    good: Good = Relationship(back_populates="recipe_items")
+    recipe: Recipe = Relationship(back_populates="recipe_items")
+
+
+class RecipeBase(SQLModel):
+    id: int | None = Field(default=None, primary_key=True)
+    name: str
+
+
+class Recipe(RecipeBase, table=True):
+    recipe_items: list["RecipeItem"] | None = Relationship(back_populates="recipe")
+    workplaces: list["Workplace"] | None = Relationship(back_populates="recipe")
 
 
 class OccupationBase(SQLModel):
-    wage: int
-    hours: int
+    id: int | None = Field(default=None, primary_key=True)
     workplace_id: int | None = Field(default=None, foreign_key="workplace.id")
     person_id: int | None = Field(default=None, foreign_key="person.id")
+    wage: int
+    hours: int
 
 
 class Occupation(OccupationBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    workplace: WorkPlace = Relationship(back_populates="occupations")
+    workplace: Workplace = Relationship(back_populates="occupations")
     person: Person = Relationship(back_populates="occupations")
 
 
 class PersonBase(ActorBase):
+    id: int | None = Field(default=None, primary_key=True)
     name: str
     birthYear: int
     happiness: int = 0
@@ -40,8 +66,7 @@ class PersonBase(ActorBase):
 
 
 class Person(PersonBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    occupations: list["Occupation"] | None = Relationship(back_populates="occupation")
+    occupations: list["Occupation"] | None = Relationship(back_populates="person")
 
 
 class PersonCreate(PersonBase):
@@ -49,33 +74,24 @@ class PersonCreate(PersonBase):
 
 
 class WorkplaceBase(ActorBase):
-    maxWorkers: int = 0
-    recipe_id: int | None = Field(default=None, foreign_key="recipe.id")
-
-
-class WorkPlace(WorkplaceBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    recipe: Recipe = Relationship(back_populates="recipe")
-    occupations: list["Occupation"] | None = Relationship(back_populates="occupation")
+    recipe_id: int | None = Field(default=None, foreign_key="recipe.id")
+    maxWorkers: int = 0
+
+
+class Workplace(WorkplaceBase, table=True):
+    recipe: Recipe = Relationship(back_populates="workplaces")
+    occupations: list["Occupation"] | None = Relationship(back_populates="workplace")
 
 
 class ProductBase(SQLModel):
+    id: int | None = Field(default=None, primary_key=True)
     good_id: int | None = Field(default=None, foreign_key="good.id")
     actor_id: int | None = Field(default=None, foreign_key="actor.id")
     quantity: int = 0
-    price: float
+    price: float | None
 
 
 class Product(ProductBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    good: Good = Relationship(back_populates="good")
+    good: Good = Relationship(back_populates="products")
     actor: Actor = Relationship(back_populates="products")
-
-
-class RecipeBase(SQLModel):
-    input: dict[Good, int] | None = Relationship(back_populates="good")
-    output: dict[Good, int] | None = Relationship(back_populates="good")
-
-
-class Recipe(RecipeBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
