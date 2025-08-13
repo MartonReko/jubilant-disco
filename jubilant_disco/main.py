@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from sqlmodel import Session, SQLModel, create_engine, select
-from jubilant_disco.tables import *
+from jubilant_disco.tables import Actor, Good, PersonCreate, RecipeItem, Recipe, Occupation, Person, Workplace, Product
 
 
 sqlite_file_name = "database.db"
