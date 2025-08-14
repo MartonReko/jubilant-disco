@@ -1,11 +1,18 @@
-from __future__ import annotations
-
 from sqlmodel import Relationship
 
-from jubilant_disco.models import ActorBase, GoodBase, OccupationBase, PersonBase, ProductBase, RecipeBase, RecipeItemBase, WorkplaceBase
+from jubilant_disco.models import (
+    ActorBase,
+    GoodBase,
+    OccupationBase,
+    PersonBase,
+    ProductBase,
+    RecipeBase,
+    RecipeItemBase,
+    WorkplaceBase,
+)
 
 
-class Actor(ActorBase):
+class Actor(ActorBase, table=True):
     products: list["Product"] | None = Relationship(back_populates="actor")
 
 
@@ -14,9 +21,14 @@ class Good(GoodBase, table=True):
     recipe_items: list["RecipeItem"] | None = Relationship(back_populates="good")
 
 
+class Product(ProductBase, table=True):
+    good: "Good" = Relationship(back_populates="products")
+    actor: "Actor" = Relationship(back_populates="products")
+
+
 class RecipeItem(RecipeItemBase, table=True):
-    good: Good = Relationship(back_populates="recipe_items")
-    recipe: Recipe = Relationship(back_populates="recipe_items")
+    good: "Good" = Relationship(back_populates="recipe_items")
+    recipe: "Recipe" = Relationship(back_populates="recipe_items")
 
 
 class Recipe(RecipeBase, table=True):
@@ -25,8 +37,8 @@ class Recipe(RecipeBase, table=True):
 
 
 class Occupation(OccupationBase, table=True):
-    workplace: Workplace = Relationship(back_populates="occupations")
-    person: Person = Relationship(back_populates="occupations")
+    workplace: "Workplace" = Relationship(back_populates="occupations")
+    person: "Person" = Relationship(back_populates="occupations")
 
 
 class Person(PersonBase, table=True):
@@ -38,10 +50,5 @@ class PersonCreate(PersonBase):
 
 
 class Workplace(WorkplaceBase, table=True):
-    recipe: Recipe = Relationship(back_populates="workplaces")
+    recipe: "Recipe" = Relationship(back_populates="workplaces")
     occupations: list["Occupation"] | None = Relationship(back_populates="workplace")
-
-
-class Product(ProductBase, table=True):
-    good: Good = Relationship(back_populates="products")
-    actor: Actor = Relationship(back_populates="products")

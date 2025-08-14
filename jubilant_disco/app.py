@@ -1,8 +1,8 @@
 
 from fastapi import FastAPI
-from sqlmodel import Session, select
+from sqlmodel import SQLModel, Session, select
 
-from jubilant_disco.db import create_db_and_tables, engine
+from jubilant_disco.db import engine
 from jubilant_disco.tables import Person, PersonCreate
 
 
@@ -11,7 +11,7 @@ app = FastAPI()
 
 @app.on_event("startup")
 def on_startup():
-    create_db_and_tables()
+    SQLModel.metadata.create_all(engine)
 
 
 @app.post("/person/", response_model=Person)

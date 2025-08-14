@@ -1,4 +1,3 @@
-from __future__ import annotations
 from enum import Enum
 
 from sqlmodel import SQLModel, Field
@@ -24,7 +23,7 @@ class RecipeItemBase(SQLModel):
         INPUT = "INPUT"
         OUTPUT = "OUTPUT"
 
-    type: Type = Type.OUTPUT
+    type: Type = Type.INPUT
 
 
 class RecipeBase(SQLModel):
