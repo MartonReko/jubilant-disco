@@ -1,17 +1,9 @@
+
 from fastapi import FastAPI
-from sqlmodel import Session, SQLModel, create_engine, select
-from jubilant_disco.tables import Actor, Good, PersonCreate, RecipeItem, Recipe, Occupation, Person, Workplace, Product
+from sqlmodel import Session, select
 
-
-sqlite_file_name = "database.db"
-sqlite_url = f"sqlite:///{sqlite_file_name}"
-
-connect_args = {"check_same_thread": False}
-engine = create_engine(sqlite_url, echo=True, connect_args=connect_args)
-
-
-def create_db_and_tables():
-    SQLModel.metadata.create_all(engine)
+from jubilant_disco.db import create_db_and_tables, engine
+from jubilant_disco.tables import Person, PersonCreate
 
 
 app = FastAPI()

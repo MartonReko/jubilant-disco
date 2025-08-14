@@ -1,4 +1,5 @@
 from __future__ import annotations
+from enum import Enum
 
 from sqlmodel import SQLModel, Field
 
@@ -18,7 +19,12 @@ class RecipeItemBase(SQLModel):
     good_id: int = Field(default=None, foreign_key="good.id")
     recipe_id: int = Field(default=None, foreign_key="recipe.id")
     quantity: int = 1
-    is_output: bool
+
+    class Type(Enum):
+        INPUT = "INPUT"
+        OUTPUT = "OUTPUT"
+
+    type: Type = Type.OUTPUT
 
 
 class RecipeBase(SQLModel):
@@ -30,14 +36,14 @@ class OccupationBase(SQLModel):
     id: int | None = Field(default=None, primary_key=True)
     workplace_id: int | None = Field(default=None, foreign_key="workplace.id")
     person_id: int | None = Field(default=None, foreign_key="person.id")
-    wage: int
-    hours: int
+    wage: int = 0
+    hours: int = 8
 
 
 class PersonBase(ActorBase):
     id: int | None = Field(default=None, primary_key=True)
-    name: str
-    birthYear: int
+    name: str = str(id)
+    birthYear: int = 0
     happiness: int = 0
     hunger: int = 0
 
@@ -45,6 +51,7 @@ class PersonBase(ActorBase):
 class WorkplaceBase(ActorBase):
     id: int | None = Field(default=None, primary_key=True)
     recipe_id: int | None = Field(default=None, foreign_key="recipe.id")
+    name: str
     maxWorkers: int = 0
 
 
