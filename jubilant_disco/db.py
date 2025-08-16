@@ -9,7 +9,6 @@ if __name__ == "__main__":
     from jubilant_disco.tables import (
         Actor,
         Good,
-        PersonCreate,
         RecipeItem,
         Recipe,
         Occupation,

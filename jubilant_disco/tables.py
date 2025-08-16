@@ -1,5 +1,7 @@
-from sqlmodel import Relationship
+from typing import override
+from sqlmodel import Relationship, SQLModel, Session
 
+from jubilant_disco.db import engine
 from jubilant_disco.models import (
     ActorBase,
     GoodBase,
@@ -10,10 +12,26 @@ from jubilant_disco.models import (
     RecipeItemBase,
     WorkplaceBase,
 )
+from jubilant_disco.observer import Observer, Subject
 
 
 class Actor(ActorBase, table=True):
     products: list["Product"] | None = Relationship(back_populates="actor")
+
+    def pay(self, actor: "Actor", money: int) -> None | bool:
+        models: list[SQLModel] = [actor, self]
+        if self.money < money:
+            return False
+
+        actor.money += money
+        self.money -= money
+
+        with Session(engine) as session:
+            session.add_all(models)
+            session.commit()
+
+    def buy(self, product: "Product") -> None:
+        pass
 
 
 class Good(GoodBase, table=True):
@@ -24,6 +42,12 @@ class Good(GoodBase, table=True):
 class Product(ProductBase, table=True):
     good: "Good" = Relationship(back_populates="products")
     actor: "Actor" = Relationship(back_populates="products")
+
+    def split(self, quantity: int) -> None:
+        pass
+
+    def use(self) -> None:
+        pass
 
 
 class RecipeItem(RecipeItemBase, table=True):
@@ -41,14 +65,17 @@ class Occupation(OccupationBase, table=True):
     person: "Person" = Relationship(back_populates="occupations")
 
 
-class Person(PersonBase, table=True):
+class Person(PersonBase, Observer, table=True):
     occupations: list["Occupation"] | None = Relationship(back_populates="person")
-
-
-class PersonCreate(PersonBase):
-    pass
+    
+    @override
+    def update(self, subject: Subject) -> None:
+        pass
 
 
 class Workplace(WorkplaceBase, table=True):
     recipe: "Recipe" = Relationship(back_populates="workplaces")
     occupations: list["Occupation"] | None = Relationship(back_populates="workplace")
+
+    def produce(self) -> None:
+        pass
